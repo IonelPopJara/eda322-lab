@@ -1,0 +1,81 @@
+C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/proc_controller.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/proc_controller.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package chacc_pkg
+-- Compiling entity proc_controller
+
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/EDA322_processor.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/EDA322_processor.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity EDA322_processor
+
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/alu.vhd {0 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/alu.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package ATTRIBUTES
+-- Loading package std_logic_misc
+** Error: (vcom-11) Could not find work.chacc_pkg.
+** Error (suppressible): C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/alu.vhd(6): (vcom-1195) Cannot find expanded name "work.chacc_pkg".
+** Error: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/alu.vhd(6): Unknown expanded name.
+** Note: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/alu.vhd(8): VHDL Compiler exiting
+
+} {8.0 9.0 10.0 11.0} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mux.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mux.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package chacc_pkg
+-- Compiling entity mux
+
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/rca_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/rca_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity rca_tb
+-- Compiling architecture sim of rca_tb
+-- Loading package ATTRIBUTES
+-- Loading package std_logic_misc
+-- Loading entity rca
+
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/proc_bus.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/proc_bus.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package chacc_pkg
+-- Compiling entity proc_bus
+
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/reg.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/reg.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity reg
+
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/memory.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/memory.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package chacc_pkg
+-- Compiling entity memory
+
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/chacc_pkg.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/chacc_pkg.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling package chacc_pkg
+
+} {} {}}

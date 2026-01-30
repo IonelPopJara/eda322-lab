@@ -31,7 +31,7 @@ BEGIN
             -- B => alu_inB XOR STD_LOGIC_VECTOR(OTHERS => alu_op(0)),
             B => test,
             cin => alu_op(0),
-            cout => OPEN,
+            cout => OPEN,s
             O => add_res
         );
 

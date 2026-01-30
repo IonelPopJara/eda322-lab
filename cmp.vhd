@@ -1,10 +1,15 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_misc.ALL;
 
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.std_logic_misc.all;
+ENTITY cmp IS
+    PORT (
+        a : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+        b : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+        e : OUT STD_LOGIC);
+END cmp;
 
-entity cmp is
-    port(   a: in   std_logic_vector (7 downto 0);
-            b: in   std_logic_vector (7 downto 0);
-    	    e: out  std_logic);
-end cmp;
+ARCHITECTURE dataflow OF cmp IS
+BEGIN
+    e <= NOR_REDUCE(a XOR b);
+END dataflow;
