@@ -1,41 +1,40 @@
-library ieee;
-use ieee.std_logic_1164.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
 
-entity tb_cmp is
-end;
+ENTITY tb_cmp IS
+END;
 
-architecture sim of tb_cmp is
-    signal a_val : std_logic_vector(7 downto 0);
-    signal b_val : std_logic_vector(7 downto 0);
-    signal E     : std_logic;
-begin
+ARCHITECTURE sim OF tb_cmp IS
+    SIGNAL a : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL b : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL E : STD_LOGIC;
+BEGIN
 
-    dut: entity work.CMP(execute)
-        port map (
-            a_val => a_val,
-            b_val => b_val,
-            E     => E
+    dut : ENTITY work.CMP
+        PORT MAP(
+            a => a,
+            b => b,
+            E => E
         );
 
-    process
-    begin
+    PROCESS
+    BEGIN
         -- Case 1: equal ? E = 1
-        a_val <= "00000000";
-        b_val <= "00000000";
-        wait for 10 ns;
+        a <= "00000000";
+        b <= "00000000";
+        WAIT FOR 10 ns;
 
         -- Case 2: different ? E = 0
-        a_val <= "00000001";
-        b_val <= "00000000";
-        wait for 10 ns;
+        a <= "00000001";
+        b <= "00000000";
+        WAIT FOR 10 ns;
 
         -- Case 3: equal ? E = 1
-        a_val <= "10101010";
-        b_val <= "10101010";
-        wait for 10 ns;
+        a <= "10101010";
+        b <= "10101010";
+        WAIT FOR 10 ns;
 
-        wait;   -- stop simulation
-    end process;
+        WAIT; -- stop simulation
+    END PROCESS;
 
-end sim;
-
+END sim;
