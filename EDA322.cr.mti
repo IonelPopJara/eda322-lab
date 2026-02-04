@@ -93,6 +93,21 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package std_logic_misc
 -- Loading entity rca
 
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd {2 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package chacc_pkg
+-- Compiling entity mem_tb
+-- Compiling architecture sim of mem_tb
+** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(25): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+-- Loading entity memory
+** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(58): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(63): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(67): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+
 } {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/proc_bus.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/proc_bus.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -126,6 +141,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package std_logic_misc
 -- Compiling entity cmp
 -- Compiling architecture dataflow of cmp
+
+} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/memory.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/memory.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package chacc_pkg
+-- Compiling entity memory
+-- Compiling architecture behavioral of memory
 
 } {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/chacc_pkg.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/chacc_pkg.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
