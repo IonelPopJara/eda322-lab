@@ -25,29 +25,37 @@ ENTITY EDA322_processor IS
 END EDA322_processor;
 
 ARCHITECTURE structural OF EDA322_processor IS
+    -- Controller Signals
     SIGNAL pcLd : STD_LOGIC;
-    SIGNAL pcIn : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL pcOut : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL pcSel : STD_LOGIC;
     SIGNAL accLd : STD_LOGIC;
-    SIGNAL accIn : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL accOut : STD_LOGIC_VECTOR(7 DOWNTO 0);
-
+    SIGNAL accSel : STD_LOGIC;
     SIGNAL flagLd : STD_LOGIC;
-
-    SIGNAL aluOp : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    SIGNAL aluOut : STD_LOGIC_VECTOR(7 DOWNTO 0);
-
-    SIGNAL currPC : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL offset : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL busSel : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL imRead : STD_LOGIC;
     SIGNAL dmRead : STD_LOGIC;
     SIGNAL dmWrite : STD_LOGIC;
-    SIGNAL address : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL aluOp : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL busSel : STD_LOGIC_VECTOR(3 DOWNTO 0);
+
+    -- Internal Signals
+    SIGNAL nextPc : STD_LOGIC_VECTOR(7 DOWNTO 0); -- input of the PC
+    SIGNAL pcOut : STD_LOGIC_VECTOR(7 DOWNTO 0); -- output of the PC
+    SIGNAL pcIncrOut : STD_LOGIC_VECTOR(7 DOWNTO 0); -- output from the incr adder BEFORE the PC Sel
+    SIGNAL jumpAddr : STD_LOGIC_VECTOR(7 DOWNTO 0); -- output from the jump adder BEFORE the PC Sel
+    SIGNAL busOut : STD_LOGIC_VECTOR(7 DOWNTO 0); -- full bus out
+    SIGNAL busOutMSB : STD_LOGIC; -- this determines whether we add or subtract the offset of the jump
+    SIGNAL busOutFuck : STD_LOGIC_VECTOR(7 DOWNTO 0); -- this is one of the inputs of the jump adder
     SIGNAL imDataOutFull : STD_LOGIC_VECTOR(11 DOWNTO 0);
-    SIGNAL accOut : STD_LOGIC_VECTOR(8)
-    -- d => nextPC,
-    -- q => pcOut,
+    SIGNAL imDataOutController : STD_LOGIC_VECTOR(3 DOWNTO 0); -- opcode to the controller
+    SIGNAL imDataOutBus : STD_LOGIC_VECTOR(7 DOWNTO 0); -- address to the bus
+    SIGNAL accIn : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL accOut : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL dmDataOut : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL aluOut : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL aluOutFlagE : STD_LOGIC; -- input of the E register
+    SIGNAL aluOutFlagZ : STD_LOGIC; -- input of the Z register
+    SIGNAL flagEOut : STD_LOGIC; -- output of the E register
+    SIGNAL flagZOut : STD_LOGIC; -- output of the Z register
 BEGIN
 
     PC : ENTITY work.reg(structural)
@@ -56,7 +64,7 @@ BEGIN
             clk => clk,
             rstn => resetn,
             en => pcLd,
-            d => pcIn,
+            d => nextPC,
             q => pcOut,
         );
 
@@ -76,8 +84,8 @@ BEGIN
             clk => clk,
             rstn => resetn,
             en => flagLd,
-            d => EIn,
-            q => EOut,
+            d => aluOutFlagE,
+            q => flagEOut,
         );
 
     Z : ENTITY work.reg(structural)
@@ -86,23 +94,22 @@ BEGIN
             clk => clk,
             rstn => resetn,
             en => flagLd,
-            d => ZIn,
-            q => ZOut,
+            d => aluOutFlagZ,
+            q => flagZOut,
         );
 
-    ALU : ENTITIY work.alu(structural)
-
-    GENERIC MAP(
-        width => 8
-    )
-    PORT MAP(
-        alu_inA => busOut,
-        alu_inB => accOut,
-        alu_op => aluOp,
-        E => EIn,
-        Z => ZIn,
-        alu_out => aluOut,
-    );
+    ALU : ENTITY work.alu(structural)
+        GENERIC MAP(
+            width => 8
+        )
+        PORT MAP(
+            alu_inA => busOut,
+            alu_inB => accOut,
+            alu_op => aluOp,
+            E => aluOutFlagE,
+            Z => aluOutFlagZ,
+            alu_out => aluOut,
+        );
 
     InMEM : ENTITY work.memory(behavioral)
         GENERIC MAP(
@@ -130,40 +137,52 @@ BEGIN
             readEn => dmRead,
             writeEn => dmWrite,
             address => busOut,
-            dataIn => OPEN,
-            dataOut => imDataOutFull
+            dataIn => accOut,
+            dataOut => dmDataOut
         );
 
-    InterBus : ENTITY work.proc_bus(behavioral)
+    INBUS : ENTITY work.proc_bus(behavioral)
         PORT MAP(
             busSel => busSel,
-            imDataOut = >,
-            dmDataOut = >,
-            accOut = >,
-            extIn = >,
-            busOut = >,
+            imDataOut => imDataOutBus,
+            dmDataOut => dmDataOut,
+            accOut => accOut,
+            extIn => extIn,
+            busOut => busOut,
         );
 
     pcIncr : ENTITY work.rca(structural)
         GENERIC MAP(width => 8)
         PORT MAP(
-            A => currPC, -- current address
-            B => '00000000', -- increment of 1
-            cin => '1', -- increment by 1
+            A => pcOut, -- current address
+            B => '00000001', -- increment of 1
+            cin => '0', -- no cin
             cout => OPEN,
             O => pcIncrOut
         );
 
+    -- todo: make sure this works
     -- decide whether to add or subtract
     -- use a mask to convert the offSet if needed
-
     jmpAddr : ENTITY work.rca(structural)
         GENERIC MAP(width => 8)
         PORT MAP(
-            A => currPC, -- first 4 bits of A
-            B => offset, -- first 4 bits of B
-            cin => '0', -- actual carry in of the csa
+            A => pcOut, -- first 4 bits of A
+            B => busOutFuck, -- first 4 bits of B
+            cin => busOutMSB, -- actual carry in of the csa
             cout => OPEN,
-            O => l_O
+            O => jumpAddr
         );
+
+    -- multiplexer for pcSel
+    WITH pcSel SELECT nextPC <=
+    pcIncrOut WHEN "0",
+    jumpAddr WHEN OTHERS;
+
+    -- multiplexer for accSel
+    WITH accSel SELECT accIn <=
+    aluOut WHEN "0",
+    busOut WHEN OTHERS;
+
+    extOut <= accOut;
 END structural;
