@@ -49,19 +49,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity alu_testbench
 -- Compiling architecture BEHAVIORAL of alu_testbench
 
-} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/alu.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/alu.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package ATTRIBUTES
--- Loading package std_logic_misc
--- Loading package chacc_pkg
--- Compiling entity alu
--- Compiling architecture structural of alu
--- Loading entity csa
--- Loading entity cmp
-
 } {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mux.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mux.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -105,16 +92,9 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 ** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(25): (vcom-1207) An abstract literal and an identifier must have a separator between them.
 -- Loading entity memory
 ** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(58): (vcom-1207) An abstract literal and an identifier must have a separator between them.
-** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(63): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(62): (vcom-1207) An abstract literal and an identifier must have a separator between them.
 ** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(67): (vcom-1207) An abstract literal and an identifier must have a separator between them.
-
-} {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/proc_bus.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/proc_bus.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package chacc_pkg
--- Compiling entity proc_bus
+** Warning: C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/mem_tb.vhd(71): (vcom-1207) An abstract literal and an identifier must have a separator between them.
 
 } {} {}} C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/reg.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/ionel/OneDrive/Documentos/Development/eda322-lab/reg.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020

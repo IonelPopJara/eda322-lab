@@ -46,9 +46,9 @@ BEGIN
     and_res <= alu_inA AND alu_inB;
 
     WITH alu_op SELECT mux_res <=
-        xor_res WHEN "00",
-        and_res WHEN "01",
-        add_res WHEN OTHERS;
+    xor_res WHEN "00",
+    and_res WHEN "01",
+    add_res WHEN OTHERS;
 
     alu_out <= mux_res;
 

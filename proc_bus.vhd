@@ -1,16 +1,26 @@
-library ieee;
-use ieee.std_logic_1164.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
 
-library work;
-use work.chacc_pkg.all;
+LIBRARY work;
+USE work.chacc_pkg.ALL;
 
-entity proc_bus is
-    port (
-        busSel     : in std_logic_vector(3 downto 0);
-        imDataOut  : in std_logic_vector(7 downto 0);
-        dmDataOut  : in std_logic_vector(7 downto 0);
-        accOut     : in std_logic_vector(7 downto 0);
-        extIn      : in std_logic_vector(7 downto 0);
-        busOut     : out std_logic_vector(7 downto 0)
+ENTITY proc_bus IS
+    PORT (
+        busSel : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+        imDataOut : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        dmDataOut : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        accOut : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        extIn : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        busOut : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
     );
-end proc_bus;
+END proc_bus;
+
+ARCHITECTURE behavioral OF proc_bus IS
+BEGIN
+    WITH busSel SELECT busOut <=
+    imDataOut WHEN "0001",
+    dmDataOut WHEN "0010",
+    accOut WHEN "0100",
+    extIn WHEN "1000",
+    (OTHERS => 'Z') WHEN OTHERS;
+END behavioral;
