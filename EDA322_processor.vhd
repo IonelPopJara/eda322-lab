@@ -59,6 +59,12 @@ ARCHITECTURE structural OF EDA322_processor IS
     -- Signals for the jump address calculation
     SIGNAL mask : STD_LOGIC_VECTOR(7 DOWNTO 0); -- mask for the offset in the jump instruction, used to decide whether to add or subtract the offset
     SIGNAL jumpAddrInputB : STD_LOGIC_VECTOR(7 DOWNTO 0);
+
+    SIGNAL test1 : STD_LOGIC_VECTOR(0 DOWNTO 0);
+    SIGNAL test2 : STD_LOGIC_VECTOR(0 DOWNTO 0);
+
+    SIGNAL test3 : STD_LOGIC_VECTOR(0 DOWNTO 0);
+    SIGNAL test4 : STD_LOGIC_VECTOR(0 DOWNTO 0);
 BEGIN
 
     CONTROLLER : ENTITY work.proc_controller
@@ -87,6 +93,7 @@ BEGIN
             inReady => inReady,
             outValid => outValid
         );
+    test1(0) <= aluOutFlagE;
 
     E : ENTITY work.reg(structural)
         GENERIC MAP(width => 1)
@@ -94,19 +101,24 @@ BEGIN
             clk => clk,
             rstn => resetn,
             en => flagLd,
-            d => aluOutFlagE,
-            q => flagEOut
+            d => test1,
+            q => test3
         );
 
+    flagEOut <= test3(0);
+
+    test2(0) <= aluOutFlagZ;
     Z : ENTITY work.reg(structural)
         GENERIC MAP(width => 1)
         PORT MAP(
             clk => clk,
             rstn => resetn,
             en => flagLd,
-            d => aluOutFlagZ,
-            q => flagZOut
+            d => test2,
+            q => test4
         );
+
+    flagZOut <= test4(0);
 
     PC : ENTITY work.reg(structural)
         GENERIC MAP(width => 8)
@@ -152,7 +164,7 @@ BEGIN
             readEn => imRead,
             writeEn => '0',
             address => pcOut,
-            dataIn => OPEN,
+            dataIn => "00000000",
             dataOut => imDataOutFull
         );
 
