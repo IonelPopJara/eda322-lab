@@ -22,7 +22,10 @@ ENTITY memory IS
 END ENTITY;
 
 ARCHITECTURE behavioral OF memory IS
-    CONSTANT NUMBER_OF_ENTRIES : INTEGER := 2 ** DATA_WIDTH;
+    -- CONSTANT NUMBER_OF_ENTRIES : INTEGER := 2 ** DATA_WIDTH;
+
+    -- OLD (Incorrect): CONSTANT NUMBER_OF_ENTRIES : INTEGER := 2 ** DATA_WIDTH;
+    CONSTANT NUMBER_OF_ENTRIES : INTEGER := 2 ** ADDR_WIDTH;
 
     TYPE MEMORY_ARRAY IS ARRAY (0 TO NUMBER_OF_ENTRIES - 1) OF STD_LOGIC_VECTOR(DATA_WIDTH - 1 DOWNTO 0);
 
@@ -43,13 +46,13 @@ ARCHITECTURE behavioral OF memory IS
     SIGNAL RAM : MEMORY_ARRAY := init_memory_wfile(INIT_FILE);
 
 BEGIN
-    PROCESS (clk, readEn, writeEn)
+    PROCESS (clk)
     BEGIN
         IF rising_edge(clk) THEN
             IF writeEn = '1' THEN
                 -- write from data in to memory
                 RAM(to_integer(unsigned(address))) <= dataIn;
-                ELSE
+            ELSE
                 IF readEn = '1' THEN
                     -- read from memory to data out
                     dataOut <= RAM(to_integer(unsigned(address)));

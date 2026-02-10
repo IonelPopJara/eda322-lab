@@ -51,6 +51,10 @@ BEGIN
 
     simu : PROCESS
     BEGIN
+        address <= "01000010";
+        writeEn <= '0';
+        readEn <= '1';
+        WAIT FOR 100ns;
         address <= "00000000";
         dataIn <= "01010101";
         writeEn <= '1';

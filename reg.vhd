@@ -17,9 +17,9 @@ BEGIN
         IF rstn = '0' THEN
             q <= (OTHERS => '0');
         ELSIF rising_edge(clk) THEN
-		IF en = '1' THEN
-            		q <= d;
-		END IF;
+            IF en = '1' THEN
+                q <= d;
+            END IF;
         END IF;
     END PROCESS;
 END structural;
