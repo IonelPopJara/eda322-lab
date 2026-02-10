@@ -67,7 +67,7 @@ ARCHITECTURE structural OF EDA322_processor IS
     SIGNAL test4 : STD_LOGIC_VECTOR(0 DOWNTO 0);
 BEGIN
 
-    CONTROLLER : ENTITY work.proc_controller
+    CONTROLLER : ENTITY work.proc_controller(test)
         PORT MAP(
             -- in
             clk => clk,
@@ -114,6 +114,7 @@ BEGIN
             clk => clk,
             rstn => resetn,
             en => flagLd,
+            -- d(0) => aluOutFlagZ
             d => test2,
             q => test4
         );
@@ -155,8 +156,8 @@ BEGIN
 
     InMEM : ENTITY work.memory(behavioral)
         GENERIC MAP(
-            DATA_WIDTH => 8,
-            ADDR_WIDTH => 12,
+            DATA_WIDTH => 12,
+            ADDR_WIDTH => 8,
             INIT_FILE => iInitFile
         )
         PORT MAP(
@@ -164,7 +165,7 @@ BEGIN
             readEn => imRead,
             writeEn => '0',
             address => pcOut,
-            dataIn => "00000000",
+            dataIn => "000000000000",
             dataOut => imDataOutFull
         );
 
