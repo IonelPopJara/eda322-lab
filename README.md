@@ -4,7 +4,7 @@ Source files for the course EDA322: Digital Design at Chalmers
 
 ## Testing
 
-### Testing the registry
+### Testing the register
 
 ```bash
 force clk 0 0, 1 50ns -repeat 100s
