@@ -231,4 +231,10 @@ BEGIN
         busOut WHEN OTHERS;
 
     extOut <= accOut;
+    pc2seg <= pcOut;
+    imdataOut2seg <= imDataOutFull;
+    dmDataOut2seg <= dmDataOut;
+    aluOut2seg <= aluOut;
+    acc2seg <= accOut;
+    busOut2seg <= busOut;
 END structural;
