@@ -3,8 +3,8 @@ USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 ENTITY EDA322_processor IS
     GENERIC (
-        dInitFile : STRING := "d_memory_lab2.mif";
-        iInitFile : STRING := "i_memory_lab2.mif");
+        dInitFile : STRING := "d_memory_lab4.mif";
+        iInitFile : STRING := "i_memory_lab4.mif");
     PORT (
         clk : IN STD_LOGIC;
         resetn : IN STD_LOGIC;
@@ -73,7 +73,7 @@ BEGIN
             clk => clk,
             resetn => resetn,
             master_load_enable => master_load_enable,
-            opcode => imDataOutController, --imdataout last part
+            opcode => imDataOutFull(11 DOWNTO 8), --imdataout last part
             e_flag => flagEOut,
             z_flag => flagZOut,
             inValid => inValid,
@@ -187,7 +187,7 @@ BEGIN
     INBUS : ENTITY work.proc_bus(behavioral)
         PORT MAP(
             busSel => busSel,
-            imDataOut => imDataOutBus,
+            imDataOut => imDataOutFull(7 DOWNTO 0),
             dmDataOut => dmDataOut,
             accOut => accOut,
             extIn => extIn,

@@ -25,7 +25,9 @@ BEGIN
         (OTHERS => 'Z');
     busOut <= extIn WHEN busSel(3) = '1' ELSE
         (OTHERS => 'Z');
+
     -- option 2
+
     -- busOut <= imDataOut WHEN busSel = "0001" ELSE
     --     (OTHERS => 'Z');
     -- busOut <= dmDataOut WHEN busSel = "0010" ELSE

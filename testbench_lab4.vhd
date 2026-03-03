@@ -55,7 +55,7 @@ ARCHITECTURE tb OF testbench_lab4 IS
     SIGNAL resetn : STD_LOGIC := '0';
     SIGNAL master_load_enable : STD_LOGIC := '0';
     SIGNAL inValid, outReady : STD_LOGIC := '0';
-    SIGNAL extIn : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL extIn : STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
 
     -- output signals
     SIGNAL inReady, RinReady : STD_LOGIC;
@@ -142,7 +142,39 @@ BEGIN
         resetn <= '0';
         WAIT FOR CLK_PERIOD;
         resetn <= '1';
-        WAIT FOR CLK_PERIOD;
+        WAIT;
     END PROCESS;
 
+    test : PROCESS (clk)
+    BEGIN
+        IF rising_edge(clk) THEN
+            IF resetn = '0' THEN
+                extIn <= (OTHERS => '0');
+            ELSIF master_load_enable = '1' AND
+                inValid = '1' AND
+                inReady = '1' THEN
+                extIn <= STD_LOGIC_VECTOR(unsigned(extIn) + 1);
+            END IF;
+        END IF;
+    END PROCESS;
+
+    main_nonsense : PROCESS
+    BEGIN
+        WAIT UNTIL resetn = '1';
+        WHILE TRUE LOOP
+            WAIT FOR 30 ns;
+            master_load_enable <= '1';
+            WAIT FOR 30 ns;
+            inValid <= '1';
+            WAIT FOR 30 ns;
+            outReady <= '1';
+            WAIT FOR 270 ns;
+            master_load_enable <= '0';
+            WAIT FOR 100 ns;
+            master_load_enable <= '1';
+            WAIT FOR 60 ns;
+            inValid <= '0';
+            outReady <= '0';
+        END LOOP;
+    END PROCESS;
 END ARCHITECTURE tb;
