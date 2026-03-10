@@ -146,8 +146,10 @@ BEGIN
             width => 8
         )
         PORT MAP(
-            alu_inA => busOut,
-            alu_inB => accOut,
+            alu_inA => accOut,
+            alu_inB => busOut,
+            -- alu_inA => busOut,
+            -- alu_inB => accOut,
             alu_op => aluOp,
             E => aluOutFlagE,
             Z => aluOutFlagZ,

@@ -23,7 +23,7 @@ ARCHITECTURE structural OF alu IS
     SIGNAL mask : STD_LOGIC_VECTOR(width - 1 DOWNTO 0);
     SIGNAL test : STD_LOGIC_VECTOR(width - 1 DOWNTO 0);
 BEGIN
-    mask <= (OTHERS => alu_op(0)); -- the clanker recommended this to be safe instead of what I had before
+    mask <= (OTHERS => alu_op(0));
     test <= alu_inB XOR mask;
     CSA : ENTITY work.csa(structural)
         PORT MAP(
@@ -46,9 +46,9 @@ BEGIN
     and_res <= alu_inA AND alu_inB;
 
     WITH alu_op SELECT mux_res <=
-    xor_res WHEN "00",
-    and_res WHEN "01",
-    add_res WHEN OTHERS;
+        xor_res WHEN "00",
+        and_res WHEN "01",
+        add_res WHEN OTHERS;
 
     alu_out <= mux_res;
 

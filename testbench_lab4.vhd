@@ -80,6 +80,10 @@ ARCHITECTURE tb OF testbench_lab4 IS
 
     CONSTANT CLK_PERIOD : TIME := 10 ns;
 
+    SIGNAL last_out : STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL second_last : STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL seen_transfer : INTEGER := 0;
+
 BEGIN
     ref_proc : ENTITY work.reference_processor
         GENERIC MAP(
@@ -176,5 +180,87 @@ BEGIN
             inValid <= '0';
             outReady <= '0';
         END LOOP;
+    END PROCESS;
+
+    checker : PROCESS (clk)
+    BEGIN
+        IF rising_edge(clk) THEN
+
+            ASSERT inReady = RinReady
+            -- REPORT "Mismatch: inReady /= RinReady"
+            REPORT "Mismatch in inReady at time " & TIME'image(now) &
+                ". Expected: " & to_string(RinReady) & ", Got: " & to_string(inReady)
+
+                SEVERITY failure;
+
+            ASSERT outValid = ROutValid
+            -- REPORT "Mismatch: outValid /= ROutValid"
+            REPORT "Mismatch in outValid at time " & TIME'image(now) &
+                ". Expected: " & to_string(RoutValid) & ", Got: " & to_string(outValid)
+                SEVERITY failure;
+
+            ASSERT extOut = RextOut
+            -- REPORT "Mismatch: extOut /= RextOut"
+            REPORT "Mismatch in extOut at time " & TIME'image(now) &
+                ". Expected: " & to_string(RextOut) & ", Got: " & to_string(extOut)
+                SEVERITY failure;
+
+            -- segment display signals
+            ASSERT pc2seg = Rpc2seg
+            -- REPORT "Mismatch: pc2seg /= Rpc2seg"
+            REPORT "Mismatch in pc2seg at time " & TIME'image(now) &
+                ". Expected: " & to_string(Rpc2seg) & ", Got: " & to_string(pc2seg)
+                SEVERITY failure;
+
+            ASSERT imDataOut2seg = RimDataOut2seg
+            -- REPORT "Mismatch: imDataOut2seg /= RimDataOut2seg"
+            REPORT "Mismatch in imDataOut2seg at time " & TIME'image(now) &
+                ". Expected: " & to_string(RimDataOut2seg) & ", Got: " & to_string(imDataOut2seg)
+                SEVERITY failure;
+
+            ASSERT dmDataOut2seg = RdmDataOut2seg
+            -- REPORT "Mismatch: dmDataOut2seg /= RdmDataOut2seg"
+            REPORT "Mismatch in dmDataOut2seg at time " & TIME'image(now) &
+                ". Expected: " & to_string(RdmDataOut2seg) & ", Got: " & to_string(dmDataOut2seg)
+                SEVERITY failure;
+
+            -- ASSERT aluOut2seg ?= RaluOut2seg
+            -- REPORT "Mismatch: aluOut2seg /= RaluOut2seg"
+            --     SEVERITY failure;
+
+            ASSERT (aluOut2seg ?= RaluOut2seg) = '1'
+            -- REPORT "Mismatch: aluOut2seg /= RaluOut2seg"
+            REPORT "Mismatch in aluOut2seg at time " & TIME'image(now) &
+                ". Expected: " & to_string(RaluOut2seg) & ", Got: " & to_string(aluOut2seg)
+                SEVERITY failure;
+
+            ASSERT acc2seg = Racc2seg
+            -- REPORT "Mismatch: acc2seg /= Racc2seg"
+            REPORT "Mismatch in acc2seg at time " & TIME'image(now) &
+                ". Expected: " & to_string(Racc2seg) & ", Got: " & to_string(acc2seg)
+                SEVERITY failure;
+
+            ASSERT (busOut2seg ?= RbusOut2seg) = '1'
+            -- REPORT "Mismatch: busOut2seg /= RbusOut2seg"
+            REPORT "Mismatch in busOut2seg at time " & TIME'image(now) &
+                ". Expected: " & to_string(RbusOut2seg) & ", Got: " & to_string(busOut2seg)
+                SEVERITY failure;
+
+            IF master_load_enable = '1' AND outValid = '1' AND outReady = '1' THEN
+                second_last <= last_out;
+                last_out <= extOut;
+
+                IF seen_transfer < 2 THEN
+                    seen_transfer <= seen_transfer + 1;
+                END IF;
+            END IF;
+
+            IF seen_transfer >= 2 AND second_last = x"DE" AND last_out = x"AD" THEN
+                ASSERT false
+                REPORT "TEST PASSED: detected termination sequence DE AD"
+                    SEVERITY failure;
+            END IF;
+
+        END IF;
     END PROCESS;
 END ARCHITECTURE tb;
